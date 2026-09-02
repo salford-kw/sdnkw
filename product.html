@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منتج | سدن الكويت للمفروشات</title>
+<meta name="description" content="تفاصيل المنتج من سدن الكويت للمفروشات - تفصيل ستائر وسجاد وموكيت ومساند مع التركيب في المنزل.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="product">
+<meta property="og:locale" content="ar_KW">
+<meta name="geo.region" content="KW">
+<meta name="geo.placename" content="الكويت">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>">
+<style>
+.pd-wrap{max-width:1100px;margin:0 auto;padding:120px 20px 60px}
+.pd-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.pd-grid img{width:100%;border-radius:var(--radius);box-shadow:var(--shadow)}
+.pd-cat{display:inline-block;background:var(--light);color:var(--primary);padding:6px 16px;border-radius:50px;font-weight:600;font-size:.9rem;margin-bottom:14px}
+.pd-info h1{color:var(--primary);font-size:2rem;margin-bottom:16px;line-height:1.4}
+.pd-price{color:var(--accent);font-size:1.8rem;font-weight:800;margin-bottom:18px}
+.pd-info p.desc{color:var(--gray);line-height:2;font-size:1.05rem;margin-bottom:26px}
+.pd-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.pd-meta{border-top:1px solid #e2e8f0;padding-top:20px;color:var(--gray);line-height:2}
+.crumbs{padding:0 0 20px;color:var(--gray);font-size:.9rem}
+.crumbs a{color:var(--primary);text-decoration:none}
+@media(max-width:800px){.pd-grid{grid-template-columns:1fr}.pd-wrap{padding-top:100px}}
+</style>
+</head>
+<body>
+<header id="header">
+  <div class="nav-container">
+    <a href="index.html" class="logo" aria-label="الصفحة الرئيسية">
+      <div class="logo-icon">🪟</div>
+      <span>سدن الكويت للمفروشات</span>
+    </a>
+    <nav><ul>
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="products.html">المنتجات</a></li>
+      <li><a href="faq.html">الأسئلة</a></li>
+      <li><a href="index.html#contact">تواصل</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main class="pd-wrap">
+  <div class="crumbs"><a href="index.html">الرئيسية</a> ← <a id="crumbSec" href="products.html">المنتجات</a> ← <span id="crumbName">المنتج</span></div>
+  <div class="pd-grid" id="pdContent">
+    <p style="grid-column:1/-1;text-align:center;color:var(--gray)">جاري تحميل المنتج...</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-bottom">
+    <p>© 2026 سدن الكويت للمفروشات — تفصيل وتركيب ستائر وسجاد ومساند في جميع مناطق الكويت</p>
+  </div>
+</footer>
+
+<script src="js/site-config.js"></script>
+<script>
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const abs = s => /^https?:/i.test(s) ? s : SITE.abs(s);
+
+(async () => {
+  const id = new URLSearchParams(location.search).get('p');
+  const box = document.getElementById('pdContent');
+  try {
+    const res = await fetch(SITE.abs('data/products.json') + '?v=' + Date.now(), {cache:'no-store'});
+    const list = (await res.json()).products || [];
+    const p = list.find(x => x.id === id);
+    if (!p) { location.replace(SITE.abs('index.html#gallery')); return; }
+
+    const sec = SITE.sections.find(s => s.name === p.category);
+    const secPage = sec ? sec.page : '';
+    const price = (p.price || '').trim();
+    const title = `${p.name} | ${p.category || ''} في الكويت | سدن الكويت للمفروشات`.replace(/\s+\|\s+\|/,' |');
+    document.title = title;
+    document.getElementById('crumbName').textContent = p.name;
+    const cs = document.getElementById('crumbSec');
+    if (p.category) { cs.textContent = p.category; cs.href = secPage ? SITE.abs(secPage) : SITE.abs('products.html'); }
+
+    const setMeta = (sel, val) => { const m = document.querySelector(sel); if (m) m.setAttribute('content', val); };
+    setMeta('meta[name="description"]', (p.description || p.name).slice(0, 158));
+    setMeta('meta[property="og:type"]', 'product');
+
+    const head = document.head;
+    const add = (tag, attrs) => { const e = document.createElement(tag); Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v)); head.appendChild(e); };
+    add('link', {rel:'canonical', href: SITE.abs('product.html?p=' + encodeURIComponent(p.id))});
+    add('meta', {property:'og:title', content: title});
+    add('meta', {property:'og:description', content: (p.description||p.name).slice(0,158)});
+    add('meta', {property:'og:image', content: abs(p.image)});
+    add('meta', {property:'og:url', content: SITE.abs('product.html?p=' + encodeURIComponent(p.id))});
+
+    const wa = `https://wa.me/${SITE.whatsapp}?text=` + encodeURIComponent(
+      `مرحباً، أبغي استفسر عن: ${p.name}\n${SITE.abs('product.html?p='+encodeURIComponent(p.id))}`);
+
+    box.innerHTML = `
+      <div><img src="${abs(p.image)}" alt="${esc(p.alt || p.name)}" width="800" height="600"></div>
+      <div class="pd-info">
+        ${p.category ? `<span class="pd-cat">${esc(p.category)}</span>` : ''}
+        <h1>${esc(p.name)}</h1>
+        <div class="pd-price">${price ? esc(price) + ' ' + SITE.currencyAr : 'السعر حسب المقاس'}</div>
+        <p class="desc">${esc(p.description || '')}</p>
+        <div class="pd-actions">
+          <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">📱 اطلب عبر واتساب</a>
+          <a class="btn btn-outline" href="tel:${SITE.phoneIntl}">📞 اتصل: ${SITE.phone}</a>
+        </div>
+        <div class="pd-meta">
+          🚚 التركيب في المنزل بجميع مناطق الكويت<br>
+          📏 تفصيل حسب المقاس مع معاينة مجانية<br>
+          🗓️ آخر تحديث: ${esc(p.date || '')}
+        </div>
+        ${secPage ? `<p style="margin-top:22px"><a href="${SITE.abs(secPage)}" style="color:var(--primary);font-weight:700">← تصفح كل منتجات ${esc(p.category)}</a></p>` : ''}
+      </div>`;
+
+    const item = {
+      '@context':'https://schema.org','@type':'Product',
+      name:p.name, description:p.description||p.name, image:[abs(p.image)],
+      category:p.category||'', sku:p.id,
+      brand:{'@type':'Brand',name:SITE.businessName},
+      url: SITE.abs('product.html?p='+encodeURIComponent(p.id))
+    };
+    if (price && !isNaN(parseFloat(price))) {
+      item.offers = {'@type':'Offer', price:parseFloat(price), priceCurrency:SITE.currency,
+        availability:'https://schema.org/InStock', url:item.url,
+        seller:{'@type':'LocalBusiness',name:SITE.businessName,telephone:SITE.phoneIntl},
+        areaServed:{'@type':'Country',name:'الكويت'}};
+    }
+    const s = document.createElement('script');
+    s.type = 'application/ld+json'; s.textContent = JSON.stringify(item);
+    head.appendChild(s);
+
+    const bc = document.createElement('script');
+    bc.type = 'application/ld+json';
+    bc.textContent = JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList',
+      itemListElement:[
+        {'@type':'ListItem',position:1,name:'الرئيسية',item:SITE.baseUrl},
+        {'@type':'ListItem',position:2,name:p.category||'المنتجات',
+         item: secPage ? SITE.abs(secPage) : SITE.abs('products.html')},
+        {'@type':'ListItem',position:3,name:p.name,item:item.url}
+      ]});
+    head.appendChild(bc);
+
+  } catch (e) {
+    box.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray)">تعذّر تحميل المنتج. <a href="index.html">العودة للرئيسية</a></p>';
+  }
+})();
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>
