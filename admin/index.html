@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم | سدن الكويت للمفروشات</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+<style>
+.admin-login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--primary) 0%,var(--dark) 100%);padding:20px}
+.login-box{background:var(--white);padding:50px 40px;border-radius:var(--radius);box-shadow:var(--shadow);width:100%;max-width:420px;text-align:center}
+.login-box .logo-icon{margin:0 auto 25px;width:70px;height:70px;font-size:32px}
+.login-box h2{color:var(--primary);margin-bottom:10px;font-size:1.8rem}
+.login-box p{color:var(--gray);margin-bottom:35px}
+.login-box input[type=password]{width:100%;padding:16px;border:2px solid #e2e8f0;border-radius:var(--radius);font-family:inherit;font-size:1.1rem;margin-bottom:25px;text-align:center;letter-spacing:3px}
+.login-box input[type=password]:focus{outline:none;border-color:var(--accent)}
+.login-box .btn{width:100%;justify-content:center;padding:16px;font-size:1.1rem}
+.error-msg{color:#ef4444;margin-top:15px;font-weight:600;display:none}
+.admin-panel{display:none;min-height:100vh;background:var(--light)}
+.admin-header{background:var(--primary);color:var(--white);padding:18px 30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
+.admin-header h2{font-size:1.2rem;display:flex;align-items:center;gap:10px}
+.logout-btn{background:rgba(255,255,255,.15);color:var(--white);border:1px solid rgba(255,255,255,.3);padding:8px 20px;border-radius:50px;cursor:pointer;font-family:inherit;font-weight:600}
+.logout-btn:hover{background:var(--white);color:var(--primary)}
+.tabs{background:var(--white);border-bottom:1px solid #e2e8f0;display:flex;gap:5px;padding:0 20px;overflow-x:auto}
+.tab-btn{background:none;border:none;padding:16px 22px;font-family:inherit;font-size:1rem;font-weight:600;color:var(--gray);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--accent)}
+.admin-content{max-width:1200px;margin:0 auto;padding:35px 20px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin-bottom:32px}
+.stat-card{background:var(--white);padding:22px;border-radius:var(--radius);box-shadow:var(--shadow);text-align:center}
+.stat-card h3{color:var(--accent);font-size:1.9rem;margin-bottom:5px;word-break:break-all}
+.stat-card p{color:var(--gray);font-size:.9rem}
+.section-title{color:var(--primary);font-size:1.3rem;margin-bottom:18px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.admin-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.admin-gallery-item{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);position:relative}
+.admin-gallery-item img{width:100%;height:180px;object-fit:cover;display:block}
+.admin-gallery-item .img-info{padding:14px 15px;font-size:.85rem;color:var(--gray)}
+.pname{font-weight:700;color:var(--primary);font-size:1rem;margin-bottom:4px}
+.pprice{color:var(--accent);font-weight:700;margin-bottom:6px}
+.pdesc{line-height:1.6;margin-bottom:10px}
+.mini-btn{background:var(--light);border:1px solid #e2e8f0;padding:6px 14px;border-radius:50px;cursor:pointer;font-family:inherit;font-weight:600;color:var(--primary)}
+.admin-gallery-item .delete-btn{position:absolute;top:10px;left:10px;background:#ef4444;color:#fff;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-weight:bold;font-size:1rem;z-index:2}
+.empty-state{text-align:center;padding:60px 20px;color:var(--gray)}
+.empty-state .upload-icon{font-size:4rem;margin-bottom:15px;opacity:.5}
+.modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:5000;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.modal-box{background:var(--white);border-radius:var(--radius);max-width:560px;width:100%;padding:30px;max-height:92vh;overflow-y:auto}
+.modal-box h3{color:var(--primary);margin-bottom:20px;font-size:1.4rem}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:600;color:var(--primary);margin-bottom:6px;font-size:.92rem}
+.field input,.field textarea,.field select{width:100%;padding:12px;border:2px solid #e2e8f0;border-radius:10px;font-family:inherit;font-size:1rem}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent)}
+.field small{color:var(--gray);font-size:.82rem;display:block;margin-top:5px}
+#pf-preview{width:100%;max-height:220px;object-fit:cover;border-radius:10px;margin-bottom:12px;display:none}
+.modal-actions{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+.modal-actions .btn{flex:1;justify-content:center}
+.slot-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:22px;display:grid;grid-template-columns:260px 1fr}
+.slot-card img{width:100%;height:100%;min-height:220px;object-fit:cover}
+.slot-body{padding:20px}
+.slot-body strong{color:var(--primary);font-size:1.1rem;display:block;margin-bottom:14px}
+.slot-body label{display:block;font-weight:600;color:var(--gray);font-size:.85rem;margin:10px 0 5px}
+.slot-body input,.slot-body textarea{width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:.95rem}
+.slot-body input[type=file]{border:none;padding:12px 0 0}
+.busy{display:none;position:fixed;inset:0;background:rgba(255,255,255,.85);z-index:6000;align-items:center;justify-content:center;flex-direction:column;gap:15px;font-weight:700;color:var(--primary)}
+.spinner{width:44px;height:44px;border:4px solid #e2e8f0;border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--dark);color:#fff;padding:15px 30px;border-radius:50px;font-weight:600;box-shadow:var(--shadow);opacity:0;transition:all .4s;z-index:9999;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{background:#10b981}.toast.error{background:#ef4444}
+.note{background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:16px 18px;color:#92400e;line-height:1.8;margin-bottom:24px;font-size:.92rem}
+.note code{background:rgba(0,0,0,.06);padding:2px 6px;border-radius:5px;direction:ltr;display:inline-block}
+.note ol{margin:10px 22px 0}
+@media(max-width:760px){.slot-card{grid-template-columns:1fr}.slot-card img{min-height:180px}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="admin-login">
+  <div class="login-box">
+    <div class="logo-icon">🪟</div>
+    <h2>لوحة التحكم</h2>
+    <p>سدن الكويت للمفروشات — إدارة المنتجات والصور</p>
+    <input type="password" id="passwordInput" placeholder="أدخل كلمة المرور" autocomplete="off">
+    <button class="btn btn-primary" onclick="checkPassword()">🔓 دخول</button>
+    <p class="error-msg" id="errorMsg">❌ كلمة المرور غير صحيحة</p>
+  </div>
+</div>
+
+<div id="adminPanel" class="admin-panel">
+  <div class="admin-header">
+    <h2>🪟 لوحة تحكم سدن الكويت للمفروشات</h2>
+    <button class="logout-btn" onclick="logout()">🚪 تسجيل خروج</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="products" onclick="switchTab('products')">🛋️ المنتجات</button>
+    <button class="tab-btn" data-tab="home" onclick="switchTab('home')">🏠 الصفحة الرئيسية</button>
+    <button class="tab-btn" data-tab="settings" onclick="switchTab('settings')">⚙️ الإعدادات</button>
+  </div>
+
+  <div class="admin-content">
+
+    <!-- المنتجات -->
+    <div class="tab-pane" id="tab-products">
+      <div class="stats-grid">
+        <div class="stat-card"><h3 id="imgCount">0</h3><p>عدد المنتجات</p></div>
+        <div class="stat-card"><h3 id="priced">0</h3><p>منتجات لها سعر</p></div>
+        <div class="stat-card"><h3 id="repoName">—</h3><p>المستودع المرتبط</p></div>
+      </div>
+
+      <p id="sectionCounts" style="color:var(--gray);margin:-16px 0 26px;line-height:2;font-size:.93rem"></p>
+
+      <div class="section-title">
+        <span>🛋️ منتجات قسم «أعمالنا»</span>
+        <button class="btn btn-primary" onclick="openProductForm(null)">➕ إضافة منتج</button>
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        <div class="upload-icon">🖼️</div>
+        <h3>لا توجد منتجات بعد</h3>
+        <p>اضغط «إضافة منتج» لرفع أول صورة مع السعر والوصف</p>
+      </div>
+      <div class="admin-gallery" id="adminGallery" style="display:none"></div>
+    </div>
+
+    <!-- الصفحة الرئيسية -->
+    <div class="tab-pane" id="tab-home" style="display:none">
+      <div class="section-title">
+        <span>🏠 صور ونصوص الصفحة الرئيسية</span>
+        <button class="btn btn-primary" onclick="saveHome()">💾 حفظ ونشر الصفحة الرئيسية</button>
+      </div>
+      <div id="homeSlots"></div>
+    </div>
+
+    <!-- الإعدادات -->
+    <div class="tab-pane" id="tab-settings" style="display:none">
+      <div class="note">
+        <strong>لماذا نحتاج رمز GitHub؟</strong><br>
+        الموقع ثابت بلا سيرفر، فلوحة التحكم ترفع الصور والبيانات مباشرة إلى مستودعك.
+        <ol>
+          <li>افتح <code>github.com/settings/personal-access-tokens</code></li>
+          <li>اضغط <b>Generate new token</b> → نوع <b>Fine-grained</b></li>
+          <li>في <b>Repository access</b> اختر مستودع الموقع فقط</li>
+          <li>في <b>Permissions → Repository</b> اجعل <b>Contents = Read and write</b></li>
+          <li>انسخ الرمز والصقه بالأسفل</li>
+        </ol>
+        الرمز يُحفظ في متصفحك فقط ولا يُرفع للموقع. لا تفتح اللوحة على جهاز مشترك.
+      </div>
+
+      <div class="field"><label>اسم المستخدم على GitHub</label><input id="cfg-owner" placeholder="username"></div>
+      <div class="field"><label>اسم المستودع</label><input id="cfg-repo" placeholder="username.github.io"></div>
+      <div class="field"><label>الفرع (Branch)</label><input id="cfg-branch" placeholder="main"></div>
+      <div class="field"><label>رمز الوصول (Token)</label><input id="cfg-token" type="password" placeholder="github_pat_..."></div>
+      <button class="btn btn-primary" onclick="saveSettings()">💾 حفظ الإعدادات والاتصال</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- نموذج المنتج -->
+<div class="modal" id="productModal">
+  <div class="modal-box">
+    <h3 id="pf-title">إضافة منتج جديد</h3>
+    <img id="pf-preview" alt="معاينة صورة المنتج">
+    <div class="field">
+      <label>صورة المنتج</label>
+      <input type="file" id="pf-file" accept="image/*" onchange="pickProductImage(this)">
+      <small>تُضغط الصورة تلقائياً وتُرفع للمستودع فوراً.</small>
+    </div>
+    <div class="field"><label>اسم المنتج *</label><input id="pf-name" placeholder="مثال: ستائر بلاك أوت مجالس"></div>
+    <div class="field">
+      <label>السعر (د.ك)</label>
+      <input id="pf-price" inputmode="decimal" placeholder="15">
+      <small>اتركه فارغاً ليظهر «السعر حسب المقاس».</small>
+    </div>
+    <div class="field"><label>وصف المنتج</label><textarea id="pf-desc" rows="3" placeholder="اكتب وصفاً يذكر النوع والخامة والمنطقة"></textarea></div>
+    <div class="field">
+      <label>الوصف البديل للصورة (alt)</label>
+      <textarea id="pf-alt" rows="2" placeholder="ستائر بلاك أوت مجالس - تفصيل ستائر الكويت"></textarea>
+      <small>يُحسب في بحث صور جوجل — اجعله وصفياً ويذكر «الكويت».</small>
+    </div>
+    <div class="field">
+      <label>القسم *</label>
+      <select id="pf-cat"></select>
+      <small>القسم يحدد مكان ظهور المنتج في الصفحة الرئيسية.</small>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveProduct()">💾 حفظ ونشر</button>
+      <button class="btn btn-outline" onclick="closeProductForm()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="busy" id="busy"><div class="spinner"></div><span>جاري العمل...</span></div>
+<div class="toast" id="toast"></div>
+
+<script src="../js/site-config.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>
