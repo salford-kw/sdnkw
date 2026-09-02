@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+# مهم: مجلد /data/ مسموح لأن جوجل يحتاج قراءة products.json
+# لعرض المنتجات أثناء معالجة الصفحة. لا تمنعه.
+Allow: /data/
+Allow: /assets/
+
+User-agent: Googlebot-Image
+Allow: /assets/
+
+Sitemap: https://salford-kw.github.io/sdnkw/sitemap.xml
