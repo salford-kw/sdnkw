@@ -95,7 +95,7 @@ const abs = s => /^https?:/i.test(s) ? s : SITE.abs(s);
       `مرحباً، أبغي استفسر عن: ${p.name}\n${SITE.abs('product.html?p='+encodeURIComponent(p.id))}`);
 
     box.innerHTML = `
-      <div><img src="${abs(p.image)}" alt="${esc(p.alt || p.name)}" width="800" height="600"></div>
+      <div><img src="${abs(p.image)}" alt="${esc(p.alt || p.name)}" width="800" height="600" loading="eager" fetchpriority="high"></div>
       <div class="pd-info">
         ${p.category ? `<span class="pd-cat">${esc(p.category)}</span>` : ''}
         <h1>${esc(p.name)}</h1>
