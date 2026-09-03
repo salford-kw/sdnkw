@@ -68,20 +68,49 @@ async function putFile(path, base64, message, sha) {
 
 const b64 = str => btoa(String.fromCharCode(...new TextEncoder().encode(str)));
 
-/* ------------------ ضغط الصور قبل الرفع ------------------ */
-function compressImage(file, maxW = 1400, quality = 0.82) {
+/* ------------------ ضغط الصور قبل الرفع (متوافق مع Core Web Vitals / LCP) ------------------
+   - يحوّل كل صورة إلى WebP (أصغر بـ 25-35% من JPEG بنفس الجودة المرئية).
+     المتصفح إذا ما يدعم WebP، يرجع تلقائياً إلى JPEG (كشف تلقائي بالأسفل).
+   - يحدّ العرض الأقصى حسب الاستخدام: صور المنتجات أصغر من صور الغلاف،
+     لأن صور المنتجات تُعرض بحجم بطاقة صغيرة ولا تحتاج دقة كبيرة.
+   - جودة 0.78 تعطي توازناً جيداً بين الوضوح وحجم الملف لمعظم صور الأثاث/الأقمشة.
+   ------------------------------------------------------------------------------------------ */
+const IMG_PRESETS = {
+  product: { maxW: 1000, quality: 0.78 },   // بطاقات المنتجات وصفحة المنتج
+  hero:    { maxW: 1600, quality: 0.80 },   // صورة الغلاف الرئيسية (أكبر عرض على الشاشة)
+  default: { maxW: 1200, quality: 0.78 }    // بقية صور الصفحة الرئيسية (بطاقات الخدمات)
+};
+
+let WEBP_OK = null;
+function supportsWebP() {
+  if (WEBP_OK !== null) return Promise.resolve(WEBP_OK);
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => { WEBP_OK = img.width > 0; resolve(WEBP_OK); };
+    img.onerror = () => { WEBP_OK = false; resolve(false); };
+    img.src = 'data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA';
+  });
+}
+
+function compressImage(file, preset = 'default') {
+  const { maxW, quality } = IMG_PRESETS[preset] || IMG_PRESETS.default;
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
       const img = new Image();
-      img.onload = () => {
+      img.onload = async () => {
+        // لا تكبّر الصور الصغيرة — فقط صغّر ما هو أكبر من الحد الأقصى
         const scale = Math.min(1, maxW / img.width);
         const cv = document.createElement('canvas');
         cv.width = Math.round(img.width * scale);
         cv.height = Math.round(img.height * scale);
         cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
-        const dataUrl = cv.toDataURL('image/jpeg', quality);
-        resolve({ base64: dataUrl.split(',')[1], preview: dataUrl });
+
+        const webp = await supportsWebP();
+        const mime = webp ? 'image/webp' : 'image/jpeg';
+        const ext = webp ? 'webp' : 'jpg';
+        const dataUrl = cv.toDataURL(mime, quality);
+        resolve({ base64: dataUrl.split(',')[1], preview: dataUrl, ext, mime });
       };
       img.onerror = () => reject(new Error('تعذّر قراءة الصورة'));
       img.src = reader.result;
@@ -96,12 +125,12 @@ function catSlug(name) {
   return s ? s.slug : 'product';
 }
 
-async function uploadImage(file, category) {
+async function uploadImage(file, category, preset = 'product') {
   if (!file.type.startsWith('image/')) throw new Error('الملف ليس صورة');
-  const { base64, preview } = await compressImage(file);
+  const { base64, preview, ext } = await compressImage(file, preset);
   const prefix = catSlug(category);
-  const path = `${SITE.imagesDir}/${prefix}-${Date.now()}.jpg`;
-  await putFile(path, base64, `رفع صورة: ${path}`);
+  const path = `${SITE.imagesDir}/${prefix}-${Date.now()}.${ext}`;
+  await putFile(path, base64, `رفع صورة (${ext}): ${path}`);
   return { path, preview };
 }
 
@@ -246,7 +275,7 @@ async function pickProductImage(input) {
   if (!input.files || !input.files[0]) return;
   setBusy(true, 'جاري رفع الصورة...');
   try {
-    const { path, preview } = await uploadImage(input.files[0], document.getElementById('pf-cat').value);
+    const { path, preview } = await uploadImage(input.files[0], document.getElementById('pf-cat').value, 'product');
     const prev = document.getElementById('pf-preview');
     prev.src = preview; prev.style.display = 'block'; prev.dataset.path = path;
     toast('✅ تم رفع الصورة', 'success');
@@ -315,7 +344,8 @@ async function replaceSlotImage(key, input) {
   if (!input.files || !input.files[0]) return;
   setBusy(true, 'جاري رفع الصورة...');
   try {
-    const { path, preview } = await uploadImage(input.files[0], '__home');
+    const preset = key === 'hero' ? 'hero' : 'default';
+    const { path, preview } = await uploadImage(input.files[0], '__home', preset);
     state.home[key].image = path;
     document.getElementById('slot-img-' + key).src = preview;
     toast('✅ تم رفع الصورة — اضغط «حفظ ونشر الصفحة الرئيسية»', 'success');
