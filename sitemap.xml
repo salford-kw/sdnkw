@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/products.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/faq.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/services/curtains.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/services/carpets.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/services/flooring.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/services/mattresses.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/areas/hawalli.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/areas/salmiya.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/areas/farwaniya.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/areas/jahra.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/areas/ahmadi.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/areas/kuwait-city.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/product.html?p=p-majalis-curtains</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&amp;q=80</image:loc>
+      <image:title>ستائر مجالس</image:title>
+      <image:caption>ستائر صالون فاخرة - تفصيل ستائر مجالس الكويت</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/product.html?p=p-bedroom-curtains</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&amp;q=80</image:loc>
+      <image:title>ستائر غرف نوم</image:title>
+      <image:caption>ستائر غرف نوم مودرن - تركيب ستائر بلاك أوت الكويت</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/product.html?p=p-diwaniya-carpet</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&amp;q=80</image:loc>
+      <image:title>سجاد ديوانيات</image:title>
+      <image:caption>سجاد مجالس فاخر - سجاد تركي للديوانيات في الكويت</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/product.html?p=p-floor-seating</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&amp;q=80</image:loc>
+      <image:title>جلسات أرضية</image:title>
+      <image:caption>جلسات أرضية عربية - تفصيل قعدات ومساند في الكويت</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/product.html?p=p-office-curtains</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&amp;q=80</image:loc>
+      <image:title>ستائر مكاتب</image:title>
+      <image:caption>ستائر مكاتب وشركات - ستائر عمودية الكويت</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://salford-kw.github.io/sdnkw/product.html?p=p-home-flooring</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80</image:loc>
+      <image:title>موكيت منازل</image:title>
+      <image:caption>موكيت فاخر للمنازل - تركيب موكيت الكويت</image:caption>
+    </image:image>
+  </url>
+</urlset>
